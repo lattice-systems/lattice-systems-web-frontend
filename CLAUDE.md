@@ -12,8 +12,10 @@ This project is independent from the SpaceIA monorepo's MVP-phase rules and appr
 
 - **Framework:** Angular 22 (standalone components, signals)
 - **Styling:** Tailwind CSS v4
+- **Fonts:** self-hosted variable fonts via `@fontsource-variable/bricolage-grotesque` (display + body) and `@fontsource-variable/geist-mono` (labels, nav, data), imported in `src/styles.css`. No external `<link>`.
 - **Icons:** `@ng-icons/lucide`
 - **Component library:** spartan/ui (shadcn port for Angular), vendored locally under `libs/ui/` — same setup as `spaceai-landing-web-frontend`
+- **Motion:** no animation library. Scroll reveals use the `Reveal` directive (`src/app/shared/reveal.directive.ts`, IntersectionObserver + safety-net timer so content never ships hidden in headless renders). The hero/contacto/projects background is a live canvas mesh, `LatticeCanvas` (`src/app/shared/lattice-canvas.ts`), the brand's namesake — runs outside Angular, pauses offscreen/hidden, static frame under `prefers-reduced-motion`.
 
 ## Architecture
 
@@ -29,7 +31,11 @@ Each section is a standalone component, assembled in `features/home/home.ts`.
 
 ## Design tokens
 
-Brand navy (`--ls-navy: #193447`, sampled from the logo) replaces the blue accent used in `spaceai-landing-web-frontend` — same shadcn-style token structure (`--background`, `--foreground`, `--primary`, `--muted`, `--border`, etc.) defined in `src/styles.css`.
+**Light + dark, one brand family, single locked accent per mode.** Palette is the company navy/slate ramp (`--navy-900 #173046 … --slate-100 #c1ced9`, sampled from the logo). The accent is one "signal" that runs through the lattice, CTAs, active nav and key markers: **navy on light, ice-blue (`#c1ced9`) on dark** — same brand color, tuned to pop against each background. No second accent anywhere.
+
+Tokens live on `:root` (light, default) and `.dark` (dark) in `src/styles.css`. `.dark` is defined as a plain class (not `:root.dark`) so any subtree can opt into dark tokens — the SpaceAI panel carries `class="dark"` to stay a permanent navy island in both modes. Theme is owned by `ThemeService` (`src/app/shared/theme.ts`): initial value from `localStorage['ls-theme']` then `prefers-color-scheme`, toggled from the navbar; an inline script in `index.html` sets the class pre-boot to avoid FOUC. Also: semantic z-index scale, per-theme grain overlay, theme-aware scrims (`.theme-scrim*` fade toward `--bg-rgb`), and the lattice canvas reads `--lattice-line/node/pulse` and re-reads on theme flip.
+
+Navbar is `fixed` (always visible, with a spacer + `scroll-padding-top`). The hero lattice sits on parallax layers (`.parallax-scroll` scroll-driven + `.parallax-pointer` pointer, set outside Angular). Section rhythm alternates base bg and `bg-muted`; Proceso is a scroll-scrubbed signal timeline (not an accordion), Servicios is an index-row list (not a card grid), Proyectos is an asymmetric grid with the drenched SpaceAI panel.
 
 ## Commands
 

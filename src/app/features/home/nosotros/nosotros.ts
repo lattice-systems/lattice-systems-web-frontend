@@ -1,54 +1,79 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideLightbulb, lucideShieldCheck, lucideZap } from '@ng-icons/lucide';
+import { Reveal } from '../../../shared/reveal.directive';
 
 const PILLARS = [
   {
-    icon: 'lucideLightbulb',
+    accent: 1,
     title: 'Soluciones a medida',
-    description: 'Diseñadas para tu operación, no genéricas.',
+    description: 'Diseñadas para tu operación, no plantillas genéricas.',
   },
   {
-    icon: 'lucideZap',
+    accent: 2,
     title: 'Entrega ágil',
-    description: 'Avances incrementales, sin sorpresas.',
+    description: 'Avances incrementales y visibles, sin sorpresas al final.',
   },
   {
-    icon: 'lucideShieldCheck',
+    accent: 4,
     title: 'Código confiable',
-    description: 'Construido para durar y escalar.',
+    description: 'Arquitecturas limpias, construidas para durar y escalar.',
   },
 ] as const;
 
 @Component({
   selector: 'app-nosotros',
-  imports: [NgIcon],
-  providers: [provideIcons({ lucideLightbulb, lucideZap, lucideShieldCheck })],
+  imports: [Reveal],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <section id="nosotros" class="mx-auto flex max-w-5xl flex-wrap gap-16 px-6 py-16 sm:px-10">
-      <div class="flex min-w-70 flex-1 flex-col gap-4">
-        <h2 class="text-foreground text-3xl font-bold tracking-tight">Quiénes somos</h2>
-        <p class="text-subtle-foreground leading-relaxed">
-          Somos un equipo de desarrollo enfocado en la transformación digital de organizaciones.
-          Construimos sistemas internos, automatizamos procesos y creamos productos propios
-          impulsados por inteligencia artificial — como SpaceAI, nuestra plataforma de gestión
-          inteligente de espacios. Integramos metodologías ágiles y arquitecturas limpias y
-          escalables en cada proyecto que entregamos.
+    <section id="nosotros" class="border-border bg-muted relative isolate overflow-hidden border-t">
+      <div
+        class="glow par-y -z-10 hidden size-[30rem] opacity-[0.1] md:block"
+        style="top: -4rem; right: -8rem; background: var(--accent-1); --par-from: 90px; --par-to: -90px"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="glow par-y -z-10 hidden size-96 opacity-[0.08] md:block"
+        style="bottom: -6rem; left: -6rem; background: var(--accent-2); --par-from: -70px; --par-to: 70px"
+        aria-hidden="true"
+      ></div>
+
+      <div class="mx-auto max-w-6xl px-6 py-24 sm:px-10 sm:py-32">
+        <h2
+          class="text-foreground max-w-4xl text-3xl leading-[1.25] font-semibold tracking-[-0.01em] sm:text-[2.6rem] sm:leading-[1.2]"
+          style="text-wrap: balance"
+          data-reveal
+          revealKind="blur"
+        >
+          Somos un equipo enfocado en la
+          <span class="text-signal">transformación digital</span>
+          de organizaciones: sistemas internos, procesos automatizados y productos propios
+          impulsados por IA.
+        </h2>
+
+        <p
+          class="text-muted-foreground mt-8 max-w-2xl text-lg leading-relaxed"
+          data-reveal
+          [revealDelay]="80"
+        >
+          SpaceAI, nuestra plataforma de gestión inteligente de espacios, nace de ese mismo criterio.
+          Integramos metodologías ágiles y arquitecturas escalables en cada proyecto que entregamos.
         </p>
-      </div>
-      <div class="grid min-w-70 flex-1 gap-5">
-        @for (pillar of pillars; track pillar.title) {
-          <div class="flex items-start gap-3.5">
-            <div class="bg-muted flex size-9 shrink-0 items-center justify-center rounded-lg">
-              <ng-icon [name]="pillar.icon" size="18" class="text-primary" />
+
+        <div class="border-border mt-16 grid gap-px border-t sm:grid-cols-3">
+          @for (pillar of pillars; track pillar.title; let i = $index) {
+            <div class="pt-8 sm:pr-8" data-reveal revealKind="scale" [revealDelay]="i * 80">
+              <span
+                class="font-mono text-sm"
+                [style.color]="'var(--accent-' + pillar.accent + ')'"
+              >
+                {{ '0' + (i + 1) }}
+              </span>
+              <h3 class="text-foreground mt-4 text-lg font-semibold">{{ pillar.title }}</h3>
+              <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+                {{ pillar.description }}
+              </p>
             </div>
-            <div class="flex flex-col gap-0.5">
-              <span class="text-foreground text-[15px] font-semibold">{{ pillar.title }}</span>
-              <span class="text-muted-foreground text-sm">{{ pillar.description }}</span>
-            </div>
-          </div>
-        }
+          }
+        </div>
       </div>
     </section>
   `,

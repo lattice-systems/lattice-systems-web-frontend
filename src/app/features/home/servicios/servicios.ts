@@ -1,25 +1,36 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideCode2, lucideGlobe, lucidePlug, lucideRefreshCw } from '@ng-icons/lucide';
+import {
+  lucideArrowUpRight,
+  lucideBraces,
+  lucideMonitor,
+  lucidePlug,
+  lucideWorkflow,
+} from '@ng-icons/lucide';
+import { Reveal } from '../../../shared/reveal.directive';
 
 const SERVICES = [
   {
-    icon: 'lucideGlobe',
+    icon: 'lucideMonitor',
+    accent: 2,
     title: 'Sitios web',
     description: 'Sitios diseñados y desarrollados a medida, rápidos y fáciles de mantener.',
   },
   {
-    icon: 'lucideCode2',
+    icon: 'lucideBraces',
+    accent: 1,
     title: 'Software a medida',
     description: 'Aplicaciones y herramientas internas construidas para tu operación.',
   },
   {
-    icon: 'lucideRefreshCw',
+    icon: 'lucideWorkflow',
+    accent: 3,
     title: 'Automatización de procesos',
     description: 'Flujos de trabajo automatizados que eliminan tareas repetitivas.',
   },
   {
     icon: 'lucidePlug',
+    accent: 4,
     title: 'Integraciones tecnológicas',
     description: 'Conectamos tus sistemas y datos para que trabajen juntos.',
   },
@@ -27,25 +38,68 @@ const SERVICES = [
 
 @Component({
   selector: 'app-servicios',
-  imports: [NgIcon],
-  providers: [provideIcons({ lucideGlobe, lucideCode2, lucideRefreshCw, lucidePlug })],
+  imports: [NgIcon, Reveal],
+  providers: [
+    provideIcons({ lucideMonitor, lucideBraces, lucideWorkflow, lucidePlug, lucideArrowUpRight }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <section id="servicios" class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-16 sm:px-10">
-      <div class="flex flex-col gap-1.5">
-        <h2 class="text-foreground text-3xl font-bold tracking-tight">Servicios</h2>
-        <p class="text-muted-foreground">Qué hacemos para tu organización.</p>
-      </div>
-      <div class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(230px, 1fr))">
-        @for (service of services; track service.title) {
-          <div class="border-border bg-card flex flex-col gap-3 rounded-md border p-6">
-            <div class="bg-muted flex size-10 items-center justify-center rounded-md">
-              <ng-icon [name]="service.icon" size="20" class="text-primary" />
-            </div>
-            <span class="text-foreground text-lg font-semibold">{{ service.title }}</span>
-            <p class="text-muted-foreground text-sm leading-relaxed">{{ service.description }}</p>
-          </div>
-        }
+    <section id="servicios" class="relative isolate mx-auto max-w-6xl overflow-hidden px-6 py-24 sm:px-10 sm:py-32">
+      <div
+        class="glow par-y -z-10 hidden size-96 opacity-[0.14] md:block"
+        style="top: 2rem; right: -6rem; background: var(--accent-2); --par-from: 80px; --par-to: -80px"
+        aria-hidden="true"
+      ></div>
+
+      <div class="grid gap-x-12 gap-y-10 md:grid-cols-12">
+        <div class="md:col-span-4">
+          <h2
+            class="text-foreground text-4xl font-extrabold tracking-[-0.02em]"
+            style="text-wrap: balance"
+            data-reveal
+          >
+            Qué hacemos para tu organización
+          </h2>
+          <p class="text-muted-foreground mt-4 max-w-xs leading-relaxed" data-reveal [revealDelay]="60">
+            Cuatro frentes, un mismo criterio de ingeniería.
+          </p>
+        </div>
+
+        <ul class="border-border md:col-span-8 md:border-t">
+          @for (service of services; track service.title; let i = $index) {
+            <li
+              class="group border-border border-t md:border-t-0 md:[&:not(:first-child)]:border-t"
+              data-reveal
+              revealKind="left"
+              [revealDelay]="i * 70"
+            >
+              <a
+                href="#contacto"
+                class="press hover:bg-muted/40 flex items-center gap-5 rounded-xl px-4 py-6 sm:gap-6"
+              >
+                <span
+                  class="flex size-11 shrink-0 items-center justify-center rounded-xl border transition-transform duration-300 group-hover:-translate-y-0.5"
+                  [style.color]="'var(--accent-' + service.accent + ')'"
+                  [style.background]="'color-mix(in srgb, var(--accent-' + service.accent + ') 12%, transparent)'"
+                  [style.borderColor]="'color-mix(in srgb, var(--accent-' + service.accent + ') 34%, transparent)'"
+                >
+                  <ng-icon [name]="service.icon" size="20" />
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="text-foreground block text-lg font-semibold">{{ service.title }}</span>
+                  <span class="text-muted-foreground mt-1 block text-sm leading-relaxed">
+                    {{ service.description }}
+                  </span>
+                </span>
+                <ng-icon
+                  name="lucideArrowUpRight"
+                  size="20"
+                  class="text-muted-foreground shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </a>
+            </li>
+          }
+        </ul>
       </div>
     </section>
   `,

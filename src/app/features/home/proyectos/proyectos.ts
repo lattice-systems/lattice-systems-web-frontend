@@ -3,82 +3,101 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   lucideArmchair,
   lucideArrowUpRight,
-  lucideBot,
-  lucideGitBranch,
   lucideShieldCheck,
+  lucideSparkles,
+  lucideWaypoints,
 } from '@ng-icons/lucide';
+import { LatticeCanvas } from '../../../shared/lattice-canvas';
+import { Reveal } from '../../../shared/reveal.directive';
 
 const CASE_STUDIES = [
   {
     icon: 'lucideShieldCheck',
+    accent: 1,
     title: 'Sistema de gestión de credenciales',
-    problem: 'Los procesos de validación de credenciales eran manuales y propensos a errores.',
-    solution:
-      'Desarrollamos un sistema interno para emitir, validar y controlar credenciales en un solo lugar.',
+    problem: 'La validación de credenciales era manual y propensa a errores.',
+    solution: 'Un sistema interno para emitir, validar y controlar credenciales en un solo lugar.',
     result: 'Validación centralizada y trazable, sin hojas de cálculo ni procesos manuales.',
-    rotate: 15,
+    wide: true,
   },
   {
     icon: 'lucideArmchair',
+    accent: 3,
     title: 'Mini ERP para mueblería',
-    problem:
-      'Productos, clientes, ventas e inventario se gestionaban por separado, sin visibilidad conjunta.',
-    solution:
-      'Construimos un ERP a medida para centralizar productos, clientes, ventas, inventario y administración.',
+    problem: 'Productos, clientes, ventas e inventario vivían separados, sin visibilidad conjunta.',
+    solution: 'Un ERP a medida que centraliza productos, clientes, ventas e inventario.',
     result: 'Una sola plataforma para operar el negocio día a día.',
-    rotate: -12,
+    wide: false,
   },
   {
-    icon: 'lucideGitBranch',
+    icon: 'lucideWaypoints',
+    accent: 2,
     title: 'Captación de leads con n8n',
-    problem: 'Los prospectos llegaban por distintos canales sin un proceso claro de seguimiento.',
-    solution:
-      'Diseñamos automatizaciones con n8n para atraer, organizar y procesar leads de forma continua.',
-    result: 'Un flujo automatizado que capta y da seguimiento a prospectos sin intervención manual.',
-    rotate: 22,
+    problem: 'Los prospectos llegaban por distintos canales sin seguimiento claro.',
+    solution: 'Automatizaciones con n8n para atraer, organizar y procesar leads en continuo.',
+    result: 'Un flujo que capta y da seguimiento a prospectos sin intervención manual.',
+    wide: false,
   },
 ] as const;
 
 @Component({
   selector: 'app-proyectos',
-  imports: [NgIcon],
+  imports: [NgIcon, LatticeCanvas, Reveal],
   providers: [
-    provideIcons({ lucideBot, lucideArrowUpRight, lucideShieldCheck, lucideArmchair, lucideGitBranch }),
+    provideIcons({
+      lucideSparkles,
+      lucideArrowUpRight,
+      lucideShieldCheck,
+      lucideArmchair,
+      lucideWaypoints,
+    }),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <section id="proyectos" class="bg-muted py-16">
-      <div class="mx-auto flex max-w-5xl flex-col gap-8 px-6 sm:px-10">
-        <div class="flex flex-col gap-1.5">
-          <h2 class="text-foreground text-3xl font-bold tracking-tight">Proyectos</h2>
-          <p class="text-muted-foreground">Algunos de los sistemas que hemos construido.</p>
-        </div>
+    <section
+      id="proyectos"
+      class="relative isolate mx-auto max-w-6xl overflow-hidden px-6 py-24 sm:px-10 sm:py-32"
+    >
+      <div
+        class="glow par-y -z-10 hidden size-[28rem] opacity-[0.12] md:block"
+        style="top: 8rem; left: -8rem; background: var(--accent-1); --par-from: 120px; --par-to: -120px"
+        aria-hidden="true"
+      ></div>
 
-        <!-- Featured: SpaceAI -->
-        <div class="bg-primary relative flex flex-wrap items-center gap-8 overflow-hidden rounded-md p-10">
-          <div
-            class="absolute size-55 rounded-[48px] border-3 border-white/18"
-            style="top: -60px; right: -60px; transform: rotate(20deg)"
-            aria-hidden="true"
-          ></div>
-          <div
-            class="absolute size-55 rounded-[48px] border-3 border-white/10"
-            style="top: -20px; right: 20px; transform: rotate(-10deg)"
-            aria-hidden="true"
-          ></div>
-          <div class="relative flex min-w-80 flex-1 flex-col gap-3.5">
+      <div class="max-w-2xl">
+        <h2
+          class="text-foreground text-4xl font-extrabold tracking-[-0.02em]"
+          style="text-wrap: balance"
+          data-reveal
+        >
+          Sistemas que hemos construido
+        </h2>
+      </div>
+
+      <!-- Featured: SpaceAI, drenched navy island with its own live lattice -->
+      <div
+        class="dark border-border bg-card relative mt-12 overflow-hidden rounded-3xl border"
+        data-reveal
+        revealKind="scale"
+      >
+        <div class="absolute inset-0 opacity-70" aria-hidden="true">
+          <app-lattice [density]="0.8" [interactive]="false" />
+        </div>
+        <div
+          class="absolute inset-0"
+          aria-hidden="true"
+          style="background: linear-gradient(105deg, rgba(13,26,36,0.94) 30%, rgba(13,26,36,0.35) 100%)"
+        ></div>
+        <div class="relative grid gap-8 p-8 sm:p-12 md:grid-cols-[1.4fr_1fr] md:items-center">
+          <div class="max-w-lg">
             <span
-              class="w-fit rounded bg-white/12 px-2.5 py-1 text-xs font-semibold tracking-wider text-white/65 uppercase"
+              class="text-signal border-signal/30 bg-signal-soft inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] tracking-[0.2em] uppercase"
             >
+              <ng-icon name="lucideSparkles" size="13" />
               Producto propio
             </span>
-            <div class="flex items-center gap-3">
-              <div class="flex size-11 items-center justify-center rounded-lg bg-white/12">
-                <ng-icon name="lucideBot" size="22" class="text-white" />
-              </div>
-              <h3 class="text-2xl font-bold text-white">SpaceAI</h3>
-            </div>
-            <p class="max-w-lg text-base leading-relaxed text-white/75">
+            <h3 class="text-foreground mt-5 text-3xl font-extrabold tracking-tight">SpaceAI</h3>
+            <p class="text-subtle-foreground mt-4 text-base leading-relaxed">
               Nuestra plataforma propia de inteligencia artificial, automatización y gestión
               inteligente de espacios.
             </p>
@@ -86,50 +105,70 @@ const CASE_STUDIES = [
               href="https://spaceai.latticesystems.dev"
               target="_blank"
               rel="noopener"
-              class="mt-1 inline-flex w-fit items-center gap-1.5 border-b border-white/40 pb-0.5 text-sm font-medium text-white"
+              class="text-foreground signal-underline press mt-6 inline-flex w-fit items-center gap-1.5 pb-1 text-sm font-medium"
             >
               Ver SpaceAI
               <ng-icon name="lucideArrowUpRight" size="16" />
             </a>
           </div>
         </div>
+      </div>
 
-        <!-- Case studies -->
-        <div class="grid gap-5" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))">
-          @for (project of caseStudies; track project.title) {
-            <div class="border-border bg-card relative flex flex-col gap-4 overflow-hidden rounded-md border p-7">
-              <div
-                class="border-border absolute size-27 rounded-[26px] border-2"
-                [style]="'top: -30px; right: -30px; transform: rotate(' + project.rotate + 'deg)'"
-                aria-hidden="true"
-              ></div>
-              <div class="bg-muted relative flex size-10 items-center justify-center rounded-md">
-                <ng-icon [name]="project.icon" size="20" class="text-primary" />
-              </div>
-              <h3 class="text-foreground text-lg font-semibold">{{ project.title }}</h3>
-              <div class="flex flex-col gap-2.5">
-                <div>
-                  <span class="text-muted-foreground mb-0.5 block text-xs font-semibold tracking-wider uppercase">
-                    Problema
-                  </span>
-                  <p class="text-subtle-foreground text-sm leading-relaxed">{{ project.problem }}</p>
-                </div>
-                <div>
-                  <span class="text-muted-foreground mb-0.5 block text-xs font-semibold tracking-wider uppercase">
-                    Solución
-                  </span>
-                  <p class="text-subtle-foreground text-sm leading-relaxed">{{ project.solution }}</p>
-                </div>
-                <div>
-                  <span class="text-muted-foreground mb-0.5 block text-xs font-semibold tracking-wider uppercase">
-                    Resultado
-                  </span>
-                  <p class="text-foreground text-sm leading-relaxed">{{ project.result }}</p>
-                </div>
-              </div>
+      <!-- Case studies: asymmetric grid, first spans full width -->
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        @for (project of caseStudies; track project.title; let i = $index) {
+          <article
+            class="card-accent border-border bg-card flex flex-col rounded-3xl border p-8"
+            [class.md:col-span-2]="project.wide"
+            [class.md:flex-row]="project.wide"
+            [class.md:items-start]="project.wide"
+            [class.md:gap-12]="project.wide"
+            [style.--ca]="'var(--accent-' + project.accent + ')'"
+            data-reveal
+            [revealKind]="project.wide ? '' : 'scale'"
+            [revealDelay]="i * 80"
+          >
+            <div [class.md:w-72]="project.wide" [class.md:shrink-0]="project.wide">
+              <span
+                class="flex size-11 items-center justify-center rounded-xl border"
+                [style.color]="'var(--accent-' + project.accent + ')'"
+                [style.background]="'color-mix(in srgb, var(--accent-' + project.accent + ') 12%, transparent)'"
+                [style.borderColor]="'color-mix(in srgb, var(--accent-' + project.accent + ') 34%, transparent)'"
+              >
+                <ng-icon [name]="project.icon" size="20" />
+              </span>
+              <h3 class="text-foreground mt-5 text-xl font-semibold">{{ project.title }}</h3>
             </div>
-          }
-        </div>
+
+            <dl class="mt-5 flex flex-1 flex-col gap-4 md:mt-0">
+              <div>
+                <dt class="text-muted-foreground font-mono text-[11px] tracking-[0.18em] uppercase">
+                  Problema
+                </dt>
+                <dd class="text-subtle-foreground mt-1 text-sm leading-relaxed">
+                  {{ project.problem }}
+                </dd>
+              </div>
+              <div>
+                <dt class="text-muted-foreground font-mono text-[11px] tracking-[0.18em] uppercase">
+                  Solución
+                </dt>
+                <dd class="text-subtle-foreground mt-1 text-sm leading-relaxed">
+                  {{ project.solution }}
+                </dd>
+              </div>
+              <div class="border-border border-t pt-4">
+                <dt
+                  class="font-mono text-[11px] tracking-[0.18em] uppercase"
+                  [style.color]="'var(--accent-' + project.accent + ')'"
+                >
+                  Resultado
+                </dt>
+                <dd class="text-foreground mt-1 text-sm leading-relaxed">{{ project.result }}</dd>
+              </div>
+            </dl>
+          </article>
+        }
       </div>
     </section>
   `,

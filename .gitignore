@@ -51,6 +51,9 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# Vercel (local project link, never pushed)
+.vercel/
+
 # Build tools & package managers
 package-lock.json
 pnpm-lock.yaml
