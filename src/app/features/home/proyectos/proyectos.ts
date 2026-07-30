@@ -83,7 +83,7 @@ const CASE_STUDIES = [
               inteligente de espacios.
             </p>
             <a
-              href="https://latticesystems.dev/spaceai"
+              href="https://spaceai.latticesystems.dev"
               target="_blank"
               rel="noopener"
               class="mt-1 inline-flex w-fit items-center gap-1.5 border-b border-white/40 pb-0.5 text-sm font-medium text-white"

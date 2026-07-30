@@ -43,6 +43,6 @@ ng build --configuration production
 
 The Contacto section is a client-only demo (no backend call) — on submit it shows a "Gracias" success state. If a real backend is added later, wire it the same way `spaceai-landing-web-frontend`'s `contacto.ts` calls `ContactMessagesService`.
 
-## Known placeholder
+## Deployment
 
-The "Ver SpaceAI" link in the Proyectos section points to `https://latticesystems.dev/spaceai` as a placeholder — update it once the real production URL for the SpaceIA landing site is known.
+Deployed on Vercel at `lattice-systems-web-frontend.vercel.app`, project `daniel-ojeda-lunas-projects/lattice-systems-web-frontend`, connected to `github.com/lattice-systems/lattice-systems-web-frontend` (public) for auto-deploy on push to `master`. The "Ver SpaceAI" link in the Proyectos section points to the real production URL, `https://spaceai.latticesystems.dev`.
