@@ -9,6 +9,11 @@
 npm-debug.log
 yarn-error.log
 
+# AI tooling (local only, never pushed to this public repo)
+.claude/
+.agents/
+.github/skills/
+
 # IDEs and editors
 .idea/
 .project
